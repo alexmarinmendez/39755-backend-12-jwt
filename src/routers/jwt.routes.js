@@ -1,5 +1,6 @@
 import { Router } from 'express'
-import { generateToken, authToken } from '../utils.js'
+import { generateToken, authToken, passportCall } from '../utils.js'
+import passport from 'passport'
 
 const router = Router()
 const users = [{ email: 'alexmarinmendez@coder.com', password: 'secret' }]
@@ -23,7 +24,9 @@ router.post('/login', (req, res) => {
     res.cookie('quebonitosoy', access_token).json({ status: 'success' })
 })
 
-router.get('/private', authToken, (req, res) => {
-    res.json({ message: 'ok! estas dentro de la seccion privada.' })
+// router.get('/private', authToken, (req, res) => {
+router.get('/private', passportCall('jwt'), (req, res) => {
+    // res.json({ message: 'ok! estas dentro de la seccion privada.' })
+    res.json({ status: 'success', payload: req.user })
 })
 export default router

@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
-const PRIVATE_KEY = 'c0d3r'
+import passport from 'passport'
+export const PRIVATE_KEY = 'c0d3r'
 
 export const generateToken = user => {
     const token = jwt.sign({ user }, PRIVATE_KEY, { expiresIn: '24h' })
@@ -15,4 +16,18 @@ export const authToken = (req, res, next) => {
         req.user = credentials.user
         next()
     })
+}
+
+export const passportCall = (strategy) => {
+    return async (req, res, next) => {
+        passport.authenticate(strategy, function(err, user, info) {
+            if (err) return next(err)
+            if (!user) {
+                return res.status(401).send({ error: info.messages ? info.messages : info.toString() })
+            }
+
+            req.user = user
+            next()
+        })(req, res, next)
+    }
 }
