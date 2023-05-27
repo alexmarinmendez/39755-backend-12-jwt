@@ -7,7 +7,7 @@ export const generateToken = user => {
 }
 
 export const authToken = (req, res, next) => {
-    const token = req.headers.auth
+    const token = req.cookies["quebonitosoy"]
     if (!token) return res.status(401).json({ error: 'Not auth' })
     jwt.verify(token, PRIVATE_KEY, (error, credentials) => {
         if (error) return res.status(403).json({ error: 'Not authorized' })

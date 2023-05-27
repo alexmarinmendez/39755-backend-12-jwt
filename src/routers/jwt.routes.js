@@ -23,4 +23,7 @@ router.post('/login', (req, res) => {
     res.cookie('quebonitosoy', access_token).json({ status: 'success' })
 })
 
+router.get('/private', authToken, (req, res) => {
+    res.json({ message: 'ok! estas dentro de la seccion privada.' })
+})
 export default router

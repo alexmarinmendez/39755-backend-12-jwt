@@ -12,3 +12,18 @@ document.getElementById('login').onclick = async e => {
     const response = await result.json()
     console.log(response)
 }
+
+document.getElementById('service').onclick = async e => {
+    try {
+        const result = await fetch('/jwt/private', {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const response = await result.json()
+        console.log(response)
+    } catch(error) {
+        console.log(`Front: ${error}`)
+    }
+}
