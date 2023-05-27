@@ -18,7 +18,8 @@ document.getElementById('service').onclick = async e => {
         const result = await fetch('/jwt/private', {
             method: 'GET',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem('')
             }
         })
         const response = await result.json()
